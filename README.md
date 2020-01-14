@@ -1,59 +1,35 @@
-humanparser
+humanparser JavaScript Bug Squash
 =========
 
-[![NPM](https://nodei.co/npm/humanparser.png)](https://nodei.co/npm/humanparser/)
+`humanparser` is a third-party library we use at Remind to parse a human name string into salutation, first name, middle name, last name, and suffix.
 
-[![Build Status](https://travis-ci.org/chovy/humanparser.svg?branch=master)](https://travis-ci.org/chovy/humanparser) [![Requirements Status](https://requires.io/github/chovy/humanparser/requirements.png?branch=master)](https://requires.io/github/chovy/humanparser/requirements/?branch=master)
+## The Bug
+When parseName is called for a salutation and last name only, it is returning the last name as the first name:
 
-Parse a human name string into salutation, first name, middle name, last name, suffix.
+```
+const human = require("humanparser")
+const attrs = human.parseName("Ms. Smith")
+console.log(attrs);
+```
 
-## Install
+actual:
 
-    npm install humanparser
-
-## Usage
-
-    var human = require('humanparser');
-    
-### parse human name    
-
-    var fullName = 'Mr. William R. Hearst, III';
-		var attrs = human.parseName(fullName);
-
-    console.log(attrs);
-
-    //produces the following output
-    
-    { 
-        saluation: 'Mr.',
-        firstName: 'William',
-        suffix: 'III',
-        lastName: 'Hearst',
-        middleName: 'R.',
-        fullName: 'Mr. William R. Hearst, III'
-    }
-      
-### get fullest name in string
-
-    var name = 'John & Peggy Sue';
-    var fullName = human.getFullestName(name);
-
-    //produces the following output
-    {
-        fullName: 'Peggy Sue'
-    }
-      
-### parse address
-
-    var address = '123 Happy Street, Honolulu, HI  65780';
-    var parsed = human.parseAddress(address);
-    
-    //produces the following output    
-    {
-        address: '123 Happy Street',
-        city: 'Honolulu',
-        state: 'HI',
-        zip: '65780',
-        fullAddress: '123 Happy Street, Honolulu, HI  65780'
-    }
-
+```
+{ 
+    salutation: 'Ms.',
+    firstName: 'Smith',
+    lastName: '',
+    fullName: 'Ms. Smith'
+}
+```
+expected:
+```
+{ 
+    salutation: 'Ms.',
+    firstName: '',
+    lastName: 'Smith',
+    fullName: 'Ms. Smith'
+}
+```
+## Your Goal
+Your goal is to find the root cause of this bug, then fix it if you have time!
