@@ -4,7 +4,7 @@ humanparser JavaScript Bug Squash
 `humanparser` is a third-party library we use at Remind to parse a human name string into salutation, first name, middle name, last name, and suffix.
 
 ## The Bug
-When parseName is called for a salutation and last name only, it is returning the last name as the first name:
+When `parseName` is called for a salutation and last name only, it is returning the last name as the first name:
 
 ```
 const human = require("humanparser")
