@@ -2,6 +2,11 @@ var _ = require('underscore');
 
 var parser = module.exports = {};
 
+/**
+ * Parse a human name string into salutation, first name, middle name, last name, suffix
+ * @param {string} name - The string we want to parse into salutation, first name, middle name, last name and suffix
+ * @returns {Object} An object containing salutation, first name, middle name, last name and suffix from the name parsed
+ */
 parser.parseName = function (name) {
     var salutations = ['mr', 'master', 'mister', 'mrs', 'miss', 'ms', 'dr', 'prof', 'rev', 'fr', 'judge', 'honorable', 'hon'];
     var suffixes = ['i', 'ii', 'iii', 'iv', 'v', 'senior', 'junior', 'jr', 'sr', 'phd', 'apr', 'rph', 'pe', 'md', 'ma', 'dmd', 'cme'];
@@ -133,6 +138,14 @@ parser.parseName = function (name) {
     return attrs;
 };
 
+/**
+ * Gets the full name from a string containing '&' or 'and' and it will return the biggest name from that string
+ * @example
+ * // returns 'Peggy Sue'
+ * getFullestName('John & Peggy Sue');
+ * @param {string} str - The string with the '&' or 'and' we want to remove and get the fullest name
+ * @returns {string} This is the string with the '&' or 'and' and with the biggest name from that initial string
+ */
 parser.getFullestName = function(str){
     var name = str;
 		var names = [];
@@ -153,6 +166,11 @@ parser.getFullestName = function(str){
     return name;
 };
 
+/**
+ * Parse an address into address, city, state, zip
+ * @param {string} str - The string we want to parse into address, city, state, zip
+ * @returns {Object} An object containing address, city, state, zip
+ */
 parser.parseAddress = function(str){
     //416 W. Manchester Blvd., Inglewood, CA  90301
     var parts = str.split(/,\s+/).reverse();
